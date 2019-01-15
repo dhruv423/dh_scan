@@ -1,12 +1,12 @@
-import React, { Component } from "react";
 import {
   createSwitchNavigator,
   createStackNavigator,
   createAppContainer
 } from "react-navigation";
 
-import QRCodeScanner from "./src/screens/QRCodeScanner";
-import SignInScreen from "./src/screens/SignInScreen";
+import React, { Component } from "react";
+import QRCodeScanner from "./screens/QRCodeScanner";
+import SignInScreen from "./screens/SignInScreen";
 
 const AppStack = createStackNavigator({ Home: QRCodeScanner });
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
@@ -24,7 +24,7 @@ const AppContainer = createAppContainer(
   )
 );
 
-export default class App extends Component {
+export default class route extends Component {
   render() {
     return <AppContainer />;
   }
