@@ -5,4 +5,4 @@ import App from "./App";
 import { name as appName } from "./app.json";
 import QRCodeScanner from "./src/screens/QRCodeScanner";
 
-AppRegistry.registerComponent(appName, () => QRCodeScanner);
+AppRegistry.registerComponent(appName, () => App);

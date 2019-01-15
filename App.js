@@ -14,7 +14,6 @@ const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
-      AuthLoading: AuthLoadingScreen,
       App: AppStack,
       Auth: AuthStack
     },
