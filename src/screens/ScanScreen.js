@@ -82,25 +82,41 @@ export default class ScanScreen extends Component {
           <View style={styles.btnContainer}>
             <TouchableOpacity
               onPress={() => this.handleRegister()}
-              style={styles.buttonTouchable}
+              style={
+                this.state.action == "register"
+                  ? styles.activeBtn
+                  : styles.buttonTouchable
+              }
             >
               <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this.handleMeal()}
-              style={styles.buttonTouchable}
+              style={
+                this.state.action == "meal"
+                  ? styles.activeBtn
+                  : styles.buttonTouchable
+              }
             >
               <Text style={styles.buttonText}>Meal</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this.handleCheckin()}
-              style={styles.buttonTouchable}
+              style={
+                this.state.action == "checkin"
+                  ? styles.activeBtn
+                  : styles.buttonTouchable
+              }
             >
               <Text style={styles.buttonText}>Check-In</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this.handleCheckout()}
-              style={styles.buttonTouchable}
+              style={
+                this.state.action == "checkout"
+                  ? styles.activeBtn
+                  : styles.buttonTouchable
+              }
             >
               <Text style={styles.buttonText}>Check-Out</Text>
             </TouchableOpacity>
@@ -127,6 +143,14 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 0,
     backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "blue",
+    borderRadius: 5
+  },
+  activeBtn: {
+    padding: 5,
+    margin: 0,
+    backgroundColor: "blue",
     borderWidth: 1,
     borderColor: "blue",
     borderRadius: 5
