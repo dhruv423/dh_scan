@@ -2,13 +2,7 @@
 
 import React, { Component } from "react";
 
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Linking
-} from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Linking } from "react-native";
 
 import QRCodeScanner from "react-native-qrcode-scanner";
 
@@ -29,9 +23,7 @@ export default class ScanScreen extends Component {
         break;
 
       default:
-        Linking.openURL(e.data).catch(err =>
-          console.error("An error occured", err)
-        );
+        Linking.openURL(e.data).catch(err => console.error("An error occured", err));
         break;
     }
   }
@@ -67,28 +59,16 @@ export default class ScanScreen extends Component {
         topContent={<Text style={styles.centerText}>DeltaHacks</Text>}
         bottomContent={
           <View style={styles.btnContainer}>
-            <TouchableOpacity
-              onPress={this.handleRegister}
-              style={styles.buttonTouchable}
-            >
+            <TouchableOpacity onPress={this.handleRegister} style={styles.buttonTouchable}>
               <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={this.handleMeal}
-              style={styles.buttonTouchable}
-            >
+            <TouchableOpacity onPress={this.handleMeal} style={styles.buttonTouchable}>
               <Text style={styles.buttonText}>Meal</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={this.handleCheckin}
-              style={styles.buttonTouchable}
-            >
+            <TouchableOpacity onPress={this.handleCheckin} style={styles.buttonTouchable}>
               <Text style={styles.buttonText}>Check-In</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={this.handleCheckout}
-              style={styles.buttonTouchable}
-            >
+            <TouchableOpacity onPress={this.handleCheckout} style={styles.buttonTouchable}>
               <Text style={styles.buttonText}>Check-Out</Text>
             </TouchableOpacity>
           </View>
@@ -101,11 +81,9 @@ export default class ScanScreen extends Component {
 const styles = StyleSheet.create({
   centerText: {
     flex: 1,
-
     fontSize: 18,
     color: "#777",
-    fontWeight: "500",
-    color: "#000"
+    fontWeight: "500"
   },
   buttonText: {
     fontSize: 21,
