@@ -9,7 +9,11 @@ let User = t.struct({
   password: t.String // an optional string
 });
 
-const dummyData = [{ id: 1, name: "meagan" }, { id: 2, name: "sam" }, { id: 3, name: "lauren" }];
+const dummyData = [
+  { id: 1, name: "meagan" },
+  { id: 2, name: "sam" },
+  { id: 3, name: "lauren" }
+];
 export default class SignInScreen extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +40,11 @@ export default class SignInScreen extends Component {
       <View style={styles.container}>
         {/* display */}
         <Form ref="form" type={User} />
-        <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor="#99d9f4">
+        <TouchableHighlight
+          style={styles.button}
+          onPress={this.onPress}
+          underlayColor="#99d9f4"
+        >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableHighlight>
       </View>
