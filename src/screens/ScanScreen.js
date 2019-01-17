@@ -2,28 +2,46 @@
 
 import React, { Component } from "react";
 
-import { StyleSheet, View, Text, TouchableOpacity, Linking } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Linking
+} from "react-native";
 
 import QRCodeScanner from "react-native-qrcode-scanner";
 
 export default class ScanScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = { action: "" };
+    this.state = {
+      action: ""
+    };
   }
   onSuccess(e) {
     switch (this.state.action) {
       case "register":
+        console.log("registering " + e.data);
+        this.scanner.reactivate();
         break;
       case "meal":
+        console.log("giving meal to " + e.data);
+        this.scanner.reactivate();
         break;
       case "checkin":
+        console.log("checking in " + e.data);
+        this.scanner.reactivate();
         break;
       case "checkout":
+        console.log("checking out " + e.data);
+        this.scanner.reactivate();
         break;
 
       default:
-        Linking.openURL(e.data).catch(err => console.error("An error occured", err));
+        Linking.openURL(e.data).catch(err =>
+          console.error("An error occured", err)
+        );
         break;
     }
   }
@@ -54,21 +72,36 @@ export default class ScanScreen extends Component {
   render() {
     return (
       <QRCodeScanner
+        ref={node => {
+          this.scanner = node;
+        }}
         onRead={this.onSuccess.bind(this)}
         cameraStyle={{ height: "80%" }}
         topContent={<Text style={styles.centerText}>DeltaHacks</Text>}
         bottomContent={
           <View style={styles.btnContainer}>
-            <TouchableOpacity onPress={this.handleRegister} style={styles.buttonTouchable}>
+            <TouchableOpacity
+              onPress={() => this.handleRegister()}
+              style={styles.buttonTouchable}
+            >
               <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleMeal} style={styles.buttonTouchable}>
+            <TouchableOpacity
+              onPress={() => this.handleMeal()}
+              style={styles.buttonTouchable}
+            >
               <Text style={styles.buttonText}>Meal</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleCheckin} style={styles.buttonTouchable}>
+            <TouchableOpacity
+              onPress={() => this.handleCheckin()}
+              style={styles.buttonTouchable}
+            >
               <Text style={styles.buttonText}>Check-In</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleCheckout} style={styles.buttonTouchable}>
+            <TouchableOpacity
+              onPress={() => this.handleCheckout()}
+              style={styles.buttonTouchable}
+            >
               <Text style={styles.buttonText}>Check-Out</Text>
             </TouchableOpacity>
           </View>
@@ -83,10 +116,11 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     color: "#777",
-    fontWeight: "500"
+    fontWeight: "500",
+    color: "#000"
   },
   buttonText: {
-    fontSize: 21,
+    fontSize: 22,
     color: "rgb(0,122,255)"
   },
   buttonTouchable: {

@@ -5,11 +5,11 @@ import {
   createAppContainer
 } from "react-navigation";
 
-import QRCodeScanner from "./src/screens/QRCodeScanner";
+import ScanScreen from "./src/screens/ScanScreen";
 import SignInScreen from "./src/screens/SignInScreen";
 import Loading from "./src/screens/Loading";
 
-const AppStack = createStackNavigator({ Home: QRCodeScanner });
+const AppStack = createStackNavigator({ Home: ScanScreen });
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 
 const AppContainer = createAppContainer(
