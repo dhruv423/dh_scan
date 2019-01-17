@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
+//import firebase from "react-native-firebase";
 
 import t from "tcomb-form-native"; // 0.6.9
 const Form = t.form.Form;
@@ -9,11 +10,6 @@ let User = t.struct({
   password: t.String // an optional string
 });
 
-const dummyData = [
-  { id: 1, name: "meagan" },
-  { id: 2, name: "sam" },
-  { id: 3, name: "lauren" }
-];
 export default class SignInScreen extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +26,14 @@ export default class SignInScreen extends Component {
     const value = this.refs.form.getValue();
     if (value) {
       // if validation fails, value will be null
-      console.log(value); // value here is an instance of Person
+      console.log("User is " + value.user); // value here is an instance of Person
+      console.log("Pass is " + value.password); // value here is an instance of Person
+
+      /* firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => this.props.navigation.navigate("Main"))
+        .catch(error => this.setState({ errorMessage: error.message })); */
     } else {
       console.log("hi");
     }
@@ -41,11 +44,11 @@ export default class SignInScreen extends Component {
         {/* display */}
         <Form ref="form" type={User} />
         <TouchableHighlight
-          style={styles.button}
+          style={styles.loginBtn}
           onPress={this.onPress}
           underlayColor="#99d9f4"
         >
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.btnText}>Login</Text>
         </TouchableHighlight>
       </View>
     );
@@ -57,5 +60,14 @@ const styles = StyleSheet.create({
     marginTop: 50,
     padding: 20,
     backgroundColor: "#ffffff"
+  },
+  loginBtn: {
+    width: "50%",
+    borderColor: "blue",
+    borderWidth: 1
+  },
+  btnText: {
+    fontSize: 20,
+    textAlign: "center"
   }
 });
