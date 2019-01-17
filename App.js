@@ -7,6 +7,7 @@ import {
 
 import QRCodeScanner from "./src/screens/QRCodeScanner";
 import SignInScreen from "./src/screens/SignInScreen";
+import Loading from "./src/screens/Loading";
 
 const AppStack = createStackNavigator({ Home: QRCodeScanner });
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
@@ -15,10 +16,11 @@ const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
       App: AppStack,
-      Auth: AuthStack
+      Auth: AuthStack,
+      Load: Loading
     },
     {
-      initialRouteName: "Auth"
+      initialRouteName: "App"
     }
   )
 );
