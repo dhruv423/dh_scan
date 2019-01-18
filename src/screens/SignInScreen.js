@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
-//import firebase from "react-native-firebase";
+import firebase from "react-native-firebase";
 
 import t from "tcomb-form-native"; // 0.6.9
 const Form = t.form.Form;
@@ -26,14 +26,17 @@ export default class SignInScreen extends Component {
     const value = this.refs.form.getValue();
     if (value) {
       // if validation fails, value will be null
-      console.log("User is " + value.user); // value here is an instance of Person
-      console.log("Pass is " + value.password); // value here is an instance of Person
+      console.log("User is test@gmail.com" + value.user); // value here is an instance of Person
+      console.log("Pass is test123" + value.password); // value here is an instance of Person
 
-      /* firebase
+      firebase
         .auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(() => this.props.navigation.navigate("Main"))
-        .catch(error => this.setState({ errorMessage: error.message })); */
+        .signInWithEmailAndPassword("test@gmail.com", "test123")
+        .then(() =>
+          console.log("I FUCKING LOGGED INTO FIREBASE!!!!!!!!!!!!!!!!!")
+        )
+        //this.props.navigation.navigate("Main"))
+        .catch(error => this.setState({ errorMessage: error.message }));
     } else {
       console.log("hi");
     }

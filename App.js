@@ -20,7 +20,7 @@ const AppContainer = createAppContainer(
       Load: Loading
     },
     {
-      initialRouteName: "App"
+      initialRouteName: "Load"
     }
   )
 );

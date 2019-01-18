@@ -90,7 +90,7 @@ export default class ScanScreen extends Component {
             >
               <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/*  <TouchableOpacity
               onPress={() => this.handleMeal()}
               style={
                 this.state.action == "meal"
@@ -119,7 +119,7 @@ export default class ScanScreen extends Component {
               }
             >
               <Text style={styles.buttonText}>Check-Out</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         }
       />
@@ -132,8 +132,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     color: "#777",
-    fontWeight: "500",
-    color: "#000"
+    fontWeight: "500"
   },
   buttonText: {
     fontSize: 22,
