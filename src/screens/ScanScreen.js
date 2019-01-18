@@ -11,37 +11,63 @@ import {
 } from "react-native";
 
 import QRCodeScanner from "react-native-qrcode-scanner";
+import firebase from "react-native-firebase";
 
 export default class ScanScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      action: ""
+      action: "meal"
     };
   }
   onSuccess(e) {
     switch (this.state.action) {
       case "register":
         console.log("registering " + e.data);
-        this.scanner.reactivate();
+        //this.scanner.reactivate();
         break;
       case "meal":
         console.log("giving meal to " + e.data);
-        this.scanner.reactivate();
+        const ref = firebase
+          .firestore()
+          .collection("meals")
+          .doc(e.data);
+        firebase.firestore().runTransaction(async transaction => {
+          const doc = await transaction.get(ref);
+
+          if (!doc.exists) {
+            transaction.set(ref, { mealnum: 3 });
+            // return the new value so we know what the new population is
+            console.log(e.data + " now has " + mealnum + " meals");
+          }
+
+          // exists already so lets increment it + 1
+          const newNumMeals = doc.data().mealnum - 1;
+
+          transaction.update(ref, {
+            mealnum: newNumMeals
+          });
+
+          // return the new value so we know what the new population is
+
+          console.log(e.data + " now has " + newNumMeals + " meals");
+        });
+        //this.scanner.reactivate();
         break;
       case "checkin":
         console.log("checking in " + e.data);
-        this.scanner.reactivate();
+        //this.scanner.reactivate();
         break;
       case "checkout":
         console.log("checking out " + e.data);
-        this.scanner.reactivate();
+        //this.scanner.reactivate();
         break;
 
       default:
         Linking.openURL(e.data).catch(err =>
           console.error("An error occured", err)
         );
+        //this.scanner.reactivate();
         break;
     }
   }
@@ -76,6 +102,8 @@ export default class ScanScreen extends Component {
           this.scanner = node;
         }}
         onRead={this.onSuccess.bind(this)}
+        reactivate={true}
+        reactivateTimeout={1000}
         cameraStyle={{ height: "80%" }}
         topContent={<Text style={styles.centerText}>DeltaHacks</Text>}
         bottomContent={
