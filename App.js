@@ -4,7 +4,6 @@ import {
   createStackNavigator,
   createAppContainer
 } from "react-navigation";
-
 import ScanScreen from "./src/screens/ScanScreen";
 import SignInScreen from "./src/screens/SignInScreen";
 import Loading from "./src/screens/Loading";
@@ -20,7 +19,16 @@ const AppContainer = createAppContainer(
       Load: Loading
     },
     {
-      initialRouteName: "Load"
+      initialRouteName: "Load",
+      defaultNavigationOptions: {
+        headerStyle: {
+          backgroundColor: "#f4511e"
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "bold"
+        }
+      }
     }
   )
 );

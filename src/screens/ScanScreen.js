@@ -1,6 +1,7 @@
 "use strict";
 
 import React, { Component } from "react";
+import { Button } from "react-native";
 
 import {
   StyleSheet,
@@ -20,6 +21,33 @@ export default class ScanScreen extends Component {
       action: "meal"
     };
   }
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerRight: (
+        <Button
+          title="Sign out"
+          onPress={navigation.getParam("signOut")}
+          color="red"
+        />
+      ),
+      title: "DeltaHacks V"
+    };
+  };
+  componentDidMount() {
+    this.props.navigation.setParams({ signOut: () => this.signOut() });
+  }
+
+  signOut() {
+    console.log("signing out..");
+
+    try {
+      firebase.auth().signOut();
+      this.props.navigation.navigate("Load");
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   onSuccess(e) {
     switch (this.state.action) {
       case "register":
@@ -105,7 +133,6 @@ export default class ScanScreen extends Component {
         reactivate={true}
         reactivateTimeout={1000}
         cameraStyle={{ height: "80%" }}
-        topContent={<Text style={styles.centerText}>DeltaHacks</Text>}
         bottomContent={
           <View style={styles.btnContainer}>
             <TouchableOpacity
@@ -116,7 +143,15 @@ export default class ScanScreen extends Component {
                   : styles.buttonTouchable
               }
             >
-              <Text style={styles.buttonText}>Register</Text>
+              <Text
+                style={
+                  this.state.action == "register"
+                    ? styles.activeButtonText
+                    : styles.buttonText
+                }
+              >
+                Register
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this.handleMeal()}
@@ -126,7 +161,15 @@ export default class ScanScreen extends Component {
                   : styles.buttonTouchable
               }
             >
-              <Text style={styles.buttonText}>Meal</Text>
+              <Text
+                style={
+                  this.state.action == "meal"
+                    ? styles.activeButtonText
+                    : styles.buttonText
+                }
+              >
+                Meal
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this.handleCheckin()}
@@ -136,7 +179,15 @@ export default class ScanScreen extends Component {
                   : styles.buttonTouchable
               }
             >
-              <Text style={styles.buttonText}>Check-In</Text>
+              <Text
+                style={
+                  this.state.action == "checkin"
+                    ? styles.activeButtonText
+                    : styles.buttonText
+                }
+              >
+                Check-In
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this.handleCheckout()}
@@ -146,7 +197,15 @@ export default class ScanScreen extends Component {
                   : styles.buttonTouchable
               }
             >
-              <Text style={styles.buttonText}>Check-Out</Text>
+              <Text
+                style={
+                  this.state.action == "checkout"
+                    ? styles.activeButtonText
+                    : styles.buttonText
+                }
+              >
+                Check-Out
+              </Text>
             </TouchableOpacity>
           </View>
         }
@@ -181,6 +240,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "blue",
     borderRadius: 5
+  },
+  activeButtonText: {
+    fontSize: 22,
+    color: "rgb(255,255,255)"
   },
   btnContainer: {
     flexDirection: "row",
