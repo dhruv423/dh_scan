@@ -56,7 +56,7 @@ export default class ScanScreen extends Component {
         break;
       case "meal":
         console.log("giving meal to " + e.data);
-        const ref = firebase
+/*         const ref = firebase
           .firestore()
           .collection("meals")
           .doc(e.data);
@@ -79,7 +79,7 @@ export default class ScanScreen extends Component {
           // return the new value so we know what the new population is
 
           console.log(e.data + " now has " + newNumMeals + " meals");
-        });
+        }); */
         //this.scanner.reactivate();
         break;
       case "checkin":
