@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   Linking,
   Button,
-  Image
+  Image,
+  ToastAndroid
 } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import firebase from "react-native-firebase";
@@ -59,10 +60,13 @@ export default class ScanScreen extends Component {
     switch (this.state.action) {
       case "register":
         console.log("registering " + e.data);
+        ToastAndroid.show(`Beaming attendee info! ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`, ToastAndroid.SHORT);
         //this.scanner.reactivate();
         break;
       case "meal":
         console.log("giving meal to " + e.data);
+        ToastAndroid.show(`Adding a meal for ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`, ToastAndroid.LONG);
+
 /*         const ref = firebase
           .firestore()
           .collection("meals")
@@ -91,10 +95,14 @@ export default class ScanScreen extends Component {
         break;
       case "checkin":
         console.log("checking in " + e.data);
+        ToastAndroid.show(`Checking in ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`, ToastAndroid.SHORT);
+
         //this.scanner.reactivate();
         break;
       case "checkout":
         console.log("checking out " + e.data);
+        ToastAndroid.show(`Checking out ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`,  ToastAndroid.SHORT);
+
         //this.scanner.reactivate();
         break;
 
@@ -138,7 +146,7 @@ export default class ScanScreen extends Component {
         }}
         onRead={this.onSuccess.bind(this)}
         reactivate={true}
-        reactivateTimeout={5000}
+        reactivateTimeout={3000}
         cameraStyle={{ height: "80%" }}
         bottomContent={
           <View style={styles.btnContainer}>
