@@ -131,7 +131,7 @@ export default class ScanScreen extends Component {
         }}
         onRead={this.onSuccess.bind(this)}
         reactivate={true}
-        reactivateTimeout={1000}
+        reactivateTimeout={5000}
         cameraStyle={{ height: "80%" }}
         bottomContent={
           <View style={styles.btnContainer}>
