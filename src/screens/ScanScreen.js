@@ -33,12 +33,13 @@ export default class ScanScreen extends Component {
           title="Sign out"
           onPress={navigation.getParam("signOut")}
           color="red"
+          style={{marginRight : 5}}
         />
       ),
       headerTitle: (
         <View style={{ flexDirection: "row", alignContent: "center" }}>
+          <Image source={Logo} style={{ marginLeft: 10, marginRight: 10, width: 40, height: 40 }} />
           <Text style={{ fontSize: 30 }}>DeltaHacks V</Text>
-          <Image source={Logo} style={{ width: 40, height: 40 }} />
         </View>
       )
     };
@@ -254,7 +255,18 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderWidth: 1,
     borderColor: "blue",
-    borderRadius: 5
+    borderRadius: 5,
+
+    //backgroundColor: 'blue',
+    //borderColor: 'white',
+    //borderWidth: 1,
+    //borderRadius: 12,
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    //padding: 12,
+    textAlign:'center',
   },
   activeBtn: {
     padding: 5,
