@@ -1,18 +1,20 @@
 "use strict";
 
 import React, { Component } from "react";
-import { Button } from "react-native";
 
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
-  Linking
+  Linking,
+  Button,
+  Image
 } from "react-native";
-
 import QRCodeScanner from "react-native-qrcode-scanner";
 import firebase from "react-native-firebase";
+
+import Logo from "../../assets/logo.png";
 
 export default class ScanScreen extends Component {
   constructor(props) {
@@ -30,7 +32,12 @@ export default class ScanScreen extends Component {
           color="red"
         />
       ),
-      title: "DeltaHacks V"
+      headerTitle: (
+        <View style={{ flexDirection: "row", alignContent: "center" }}>
+          <Text style={{ fontSize: 30 }}>DeltaHacks V</Text>
+          <Image source={Logo} style={{ width: 40, height: 40 }} />
+        </View>
+      )
     };
   };
   componentDidMount() {
@@ -131,7 +138,7 @@ export default class ScanScreen extends Component {
         }}
         onRead={this.onSuccess.bind(this)}
         reactivate={true}
-        reactivateTimeout={1000}
+        reactivateTimeout={5000}
         cameraStyle={{ height: "80%" }}
         bottomContent={
           <View style={styles.btnContainer}>

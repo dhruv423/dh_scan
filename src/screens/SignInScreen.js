@@ -1,8 +1,15 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableHighlight,
+  Image
+} from "react-native";
 import firebase from "react-native-firebase";
 
 import t from "tcomb-form-native"; // 0.6.9
+import Logo from "../../assets/logo.png";
 const Form = t.form.Form;
 
 let User = t.struct({
@@ -45,22 +52,26 @@ export default class SignInScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* display */}
-        <Form ref="form" type={User} />
-        <TouchableHighlight
-          style={styles.loginBtn}
-          onPress={this.onPress}
-          underlayColor="#99d9f4"
-        >
-          <Text style={styles.btnText}>Login</Text>
-        </TouchableHighlight>
+        <View style={styles.logoContainer}>
+          <Image source={Logo} style={styles.logo} />
+        </View>
+        <View>
+          <Form ref="form" type={User} />
+          <TouchableHighlight
+            style={styles.loginBtn}
+            onPress={this.onPress}
+            underlayColor="#99d9f4"
+          >
+            <Text style={styles.btnText}>Login</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     marginTop: 50,
     padding: 20,
     backgroundColor: "#ffffff"
@@ -73,5 +84,18 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 20,
     textAlign: "center"
+  },
+  logoContainer: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "50%",
+    marginTop: -30
+  },
+  logo: {
+    resizeMode: "contain",
+    width: "100%",
+    height: "100%"
   }
 });
