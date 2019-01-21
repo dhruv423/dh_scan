@@ -10,6 +10,7 @@ import {
   Linking,
   Button,
   Image,
+  ToastAndroid,
   PermissionsAndroid
 } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
@@ -32,12 +33,13 @@ export default class ScanScreen extends Component {
           title="Sign out"
           onPress={navigation.getParam("signOut")}
           color="red"
+          style={{marginRight : 5}}
         />
       ),
       headerTitle: (
         <View style={{ flexDirection: "row", alignContent: "center" }}>
+          <Image source={Logo} style={{ marginLeft: 10, marginRight: 10, width: 40, height: 40 }} />
           <Text style={{ fontSize: 30 }}>DeltaHacks V</Text>
-          <Image source={Logo} style={{ width: 40, height: 40 }} />
         </View>
       )
     };
@@ -61,11 +63,14 @@ export default class ScanScreen extends Component {
     switch (this.state.action) {
       case "register":
         console.log("registering " + e.data);
+        ToastAndroid.show(`Beaming attendee info! ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`, ToastAndroid.SHORT);
         //this.scanner.reactivate();
         break;
       case "meal":
         console.log("giving meal to " + e.data);
-        const ref = firebase
+        ToastAndroid.show(`Adding a meal for ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`, ToastAndroid.LONG);
+
+/*         const ref = firebase
           .firestore()
           .collection("meals")
           .doc(e.data);
@@ -88,31 +93,27 @@ export default class ScanScreen extends Component {
           // return the new value so we know what the new population is
 
           console.log(e.data + " now has " + newNumMeals + " meals");
-        });
+        }); */
+        //this.scanner.reactivate();
         break;
       case "checkin":
         console.log("checking in " + e.data);
         navigator.geolocation.getCurrentPosition(
           position => {
             const location = JSON.stringify(position);
-
-            console.log(location);
+            ToastAndroid.show(`Checking in ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'} at ${location}`, ToastAndroid.LONG);
           },
           error => alert(error.message),
           { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
         );
         break;
+
+        //this.scanner.reactivate();
       case "checkout":
         console.log("checking out " + e.data);
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            const location = JSON.stringify(position);
+        ToastAndroid.show(`Checking out ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`,  ToastAndroid.SHORT);
 
-            console.log(location);
-          },
-          error => alert(error.message),
-          { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-        );
+        //this.scanner.reactivate();
         break;
 
       default:
@@ -154,7 +155,7 @@ export default class ScanScreen extends Component {
         }}
         onRead={this.onSuccess.bind(this)}
         reactivate={true}
-        reactivateTimeout={5000}
+        reactivateTimeout={3000}
         cameraStyle={{ height: "80%" }}
         bottomContent={
           <View style={styles.btnContainer}>
@@ -254,7 +255,18 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderWidth: 1,
     borderColor: "blue",
-    borderRadius: 5
+    borderRadius: 5,
+
+    //backgroundColor: 'blue',
+    //borderColor: 'white',
+    //borderWidth: 1,
+    //borderRadius: 12,
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    overflow: 'hidden',
+    //padding: 12,
+    textAlign:'center',
   },
   activeBtn: {
     padding: 5,
