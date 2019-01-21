@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   Linking,
   Button,
-  Image
+  Image,
+  PermissionsAndroid
 } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import firebase from "react-native-firebase";
@@ -20,7 +21,8 @@ export default class ScanScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      action: "meal"
+      action: "meal",
+      location: ""
     };
   }
   static navigationOptions = ({ navigation }) => {
@@ -87,22 +89,36 @@ export default class ScanScreen extends Component {
 
           console.log(e.data + " now has " + newNumMeals + " meals");
         });
-        //this.scanner.reactivate();
         break;
       case "checkin":
         console.log("checking in " + e.data);
-        //this.scanner.reactivate();
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const location = JSON.stringify(position);
+
+            console.log(location);
+          },
+          error => alert(error.message),
+          { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+        );
         break;
       case "checkout":
         console.log("checking out " + e.data);
-        //this.scanner.reactivate();
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const location = JSON.stringify(position);
+
+            console.log(location);
+          },
+          error => alert(error.message),
+          { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+        );
         break;
 
       default:
         Linking.openURL(e.data).catch(err =>
           console.error("An error occured", err)
         );
-        //this.scanner.reactivate();
         break;
     }
   }
