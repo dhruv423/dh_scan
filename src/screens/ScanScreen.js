@@ -65,6 +65,7 @@ export default class ScanScreen extends Component {
 
   async onSuccess(e) { 
     let attendeeEmailAddress = e.data.length >= 37 ? e.data.slice(37) : '';
+    let attendee = await this.getAttendeeData(attendeeEmailAddress);
 
     switch (this.state.action) {
       case "register":
@@ -79,7 +80,6 @@ export default class ScanScreen extends Component {
       case "meal":
         console.log("giving meal to " + e.data);
 
-        let attendee = await this.getAttendeeData(attendeeEmailAddress);
         console.log("DATA", attendee.data())
         
         firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(attendeeEmailAddress).set({meals: attendee.data().meals + 1}, {merge: true}).then(() => {
@@ -118,23 +118,79 @@ export default class ScanScreen extends Component {
         break;
       case "checkin":
         console.log("checking in " + e.data);
+
+
         navigator.geolocation.getCurrentPosition(
           position => {
             const location = JSON.stringify(position);
+
+            let updatedWhereabouts = attendee.data().whereabouts;
+            updatedWhereabouts.push({
+              building: "Thode",
+              by: firebase.auth().currentUser.email,
+              initialCheckin: true,
+              time: new Date().toLocaleString(),
+              type: 'incoming',
+              position: {
+                speed: position.coords.speed,
+                accuracy: position.coords.accuracy,
+                altitude: position.coords.altitude,
+                longitude: position.coords.longitude,
+                latitude: position.coords.latitude
+              }
+            });
+
+            firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(attendeeEmailAddress).set({whereabouts: updatedWhereabouts}, {merge: true}).then(() => {
+              ToastAndroid.show(`Updated whereabouts for ${attendeeEmailAddress}`, ToastAndroid.LONG);
+            }).catch((err) => {
+              ToastAndroid.show('Error connecting to the databse (meal), contact kumail', ToastAndroid.LONG);
+            })
             ToastAndroid.show(`Checking in ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'} at ${location}`, ToastAndroid.LONG);
           },
-          error => alert(error.message),
-          { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+          error => {
+            console.log("Error with locaation ", error);
+            ToastAndroid.show('Error checking in person (firestore or location), check with Kumail', ToastAndroid.LONG);
+            alert(error.message)
+          },
+          { enableHighAccuracy: true, timeout: 20000 }
         );
         break;
-
-        //this.scanner.reactivate();
       case "checkout":
         console.log("checking out " + e.data);
-        ToastAndroid.show(`Checking out ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`,  ToastAndroid.SHORT);
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const location = JSON.stringify(position);
 
-        //this.scanner.reactivate();
-        break;
+            let updatedWhereabouts = attendee.data().whereabouts;
+            updatedWhereabouts.push({
+              building: "Thode",
+              by: firebase.auth().currentUser.email,
+              initialCheckin: true,
+              time: new Date().toLocaleString(),
+              type: 'outbound',
+              position: {
+                speed: position.coords.speed,
+                accuracy: position.coords.accuracy,
+                altitude: position.coords.altitude,
+                longitude: position.coords.longitude,
+                latitude: position.coords.latitude
+              }
+            });
+
+            firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(attendeeEmailAddress).set({whereabouts: updatedWhereabouts}, {merge: true}).then(() => {
+              ToastAndroid.show(`Updated whereabouts for ${attendeeEmailAddress}`, ToastAndroid.LONG);
+            }).catch((err) => {
+              ToastAndroid.show('Error connecting to the databse (meal), contact kumail', ToastAndroid.LONG);
+            })
+            ToastAndroid.show(`Checking out ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'} at ${location}`, ToastAndroid.LONG);
+          },
+          error => {
+            console.log("Error with locaation ", error);
+            ToastAndroid.show('Error checking out person (firestore or location), check with Kumail', ToastAndroid.LONG);
+            alert(error.message)
+          },
+          { enableHighAccuracy: true, timeout: 20000 }
+        );        break;
 
       default:
         Linking.openURL(e.data).catch(err =>
