@@ -56,5 +56,4 @@ buck-out/
 *.jsbundle
 
 #firebase
-
 google-services.json
