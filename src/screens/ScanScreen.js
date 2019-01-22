@@ -59,16 +59,35 @@ export default class ScanScreen extends Component {
     }
   }
 
-  onSuccess(e) {
+  async getAttendeeData(email){
+    return firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(email);
+  }
+
+  async onSuccess(e) { 
+    let attendeeEmailAddress = e.data.length >= 37 ? e.data.slice(37) : '';
+
     switch (this.state.action) {
       case "register":
         console.log("registering " + e.data);
-        ToastAndroid.show(`Beaming attendee info! ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`, ToastAndroid.SHORT);
-        //this.scanner.reactivate();
+        firebase.firestore().collection('hackathon').doc('DH5').collection('FrontDesk').doc(firebase.auth().currentUser.email).set({scanned:e.data.length >= 37 ? e.data.slice(37) : ''}, {merge: true}).then(() => {
+          ToastAndroid.show(`Beaming attendee info! ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`, ToastAndroid.LONG);
+        }).catch((err) => {
+          ToastAndroid.show('Error connecting to the databse, contact kumail', ToastAndroid.LONG);
+        })
+
         break;
       case "meal":
         console.log("giving meal to " + e.data);
-        ToastAndroid.show(`Adding a meal for ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`, ToastAndroid.LONG);
+
+        let attendee = await this.getAttendeeData(attendeeEmailAddress);
+        
+        firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(attendeeEmailAddress).set({meals: attendee.data().meals + 1}, {merge: true}).then(() => {
+          ToastAndroid.show(`Updated meal for ${attendeeEmailAddress}`, ToastAndroid.LONG);
+        }).catch((err) => {
+          ToastAndroid.show('Error connecting to the databse (meal), contact kumail', ToastAndroid.LONG);
+        })
+        ToastAndroid.show(`Adding a meal for ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'} ${firebase.auth().currentUser.email}`, ToastAndroid.LONG);
+
 
 /*         const ref = firebase
           .firestore()
@@ -242,7 +261,7 @@ const styles = StyleSheet.create({
   centerText: {
     flex: 1,
     fontSize: 18,
-    color: "#777",
+    color: "blue",
     fontWeight: "500"
   },
   buttonText: {
@@ -271,9 +290,9 @@ const styles = StyleSheet.create({
   activeBtn: {
     padding: 5,
     margin: 0,
-    backgroundColor: "blue",
+    backgroundColor: "lightblue",
     borderWidth: 1,
-    borderColor: "blue",
+    borderColor: "lightblue",
     borderRadius: 5
   },
   activeButtonText: {
