@@ -60,7 +60,7 @@ export default class ScanScreen extends Component {
   }
 
   async getAttendeeData(email){
-    return firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(email);
+    return firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(email).get();
   }
 
   async onSuccess(e) { 
@@ -80,6 +80,7 @@ export default class ScanScreen extends Component {
         console.log("giving meal to " + e.data);
 
         let attendee = await this.getAttendeeData(attendeeEmailAddress);
+        console.log("DATA", attendee.data())
         
         firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(attendeeEmailAddress).set({meals: attendee.data().meals + 1}, {merge: true}).then(() => {
           ToastAndroid.show(`Updated meal for ${attendeeEmailAddress}`, ToastAndroid.LONG);
