@@ -4,7 +4,8 @@ import {
   View,
   StyleSheet,
   TouchableHighlight,
-  Image
+  Image,
+  ToastAndroid
 } from "react-native";
 import firebase from "react-native-firebase";
 
@@ -38,9 +39,8 @@ export default class SignInScreen extends Component {
 
       firebase
         .auth()
-        .signInWithEmailAndPassword("test@gmail.com", "test123")
-        .then(() =>
-          console.log("I FUCKING LOGGED INTO FIREBASE!!!!!!!!!!!!!!!!!")
+        .signInWithEmailAndPassword(value.user, value.password)
+        .then(() => ToastAndroid.show(`Logged into ${value.user}`, ToastAndroid.SHORT)
         )
         .then(() => this.props.navigation.navigate("App"))
 

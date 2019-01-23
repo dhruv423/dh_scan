@@ -59,16 +59,36 @@ export default class ScanScreen extends Component {
     }
   }
 
-  onSuccess(e) {
+  async getAttendeeData(email){
+    return firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(email).get();
+  }
+
+  async onSuccess(e) { 
+    let attendeeEmailAddress = e.data.length >= 37 ? e.data.slice(37) : '';
+    let attendee = await this.getAttendeeData(attendeeEmailAddress);
+
     switch (this.state.action) {
       case "register":
         console.log("registering " + e.data);
-        ToastAndroid.show(`Beaming attendee info! ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`, ToastAndroid.SHORT);
-        //this.scanner.reactivate();
+        firebase.firestore().collection('hackathon').doc('DH5').collection('FrontDesk').doc(firebase.auth().currentUser.email).set({scanned:e.data.length >= 37 ? e.data.slice(37) : ''}, {merge: true}).then(() => {
+          ToastAndroid.show(`Beaming attendee info! ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`, ToastAndroid.LONG);
+        }).catch((err) => {
+          ToastAndroid.show('Error connecting to the databse, contact kumail', ToastAndroid.LONG);
+        })
+
         break;
       case "meal":
         console.log("giving meal to " + e.data);
-        ToastAndroid.show(`Adding a meal for ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`, ToastAndroid.LONG);
+
+        console.log("DATA", attendee.data())
+        
+        firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(attendeeEmailAddress).set({meals: attendee.data().meals + 1}, {merge: true}).then(() => {
+          ToastAndroid.show(`Updated meal for ${attendeeEmailAddress}`, ToastAndroid.LONG);
+        }).catch((err) => {
+          ToastAndroid.show('Error connecting to the databse (meal), contact kumail', ToastAndroid.LONG);
+        })
+        ToastAndroid.show(`Adding a meal for ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'} ${firebase.auth().currentUser.email}`, ToastAndroid.LONG);
+
 
 /*         const ref = firebase
           .firestore()
@@ -98,23 +118,79 @@ export default class ScanScreen extends Component {
         break;
       case "checkin":
         console.log("checking in " + e.data);
+
+
         navigator.geolocation.getCurrentPosition(
           position => {
             const location = JSON.stringify(position);
+
+            let updatedWhereabouts = attendee.data().whereabouts;
+            updatedWhereabouts.push({
+              building: "Thode",
+              by: firebase.auth().currentUser.email,
+              initialCheckin: true,
+              time: new Date().toLocaleString(),
+              type: 'incoming',
+              position: {
+                speed: position.coords.speed,
+                accuracy: position.coords.accuracy,
+                altitude: position.coords.altitude,
+                longitude: position.coords.longitude,
+                latitude: position.coords.latitude
+              }
+            });
+
+            firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(attendeeEmailAddress).set({whereabouts: updatedWhereabouts}, {merge: true}).then(() => {
+              ToastAndroid.show(`Updated whereabouts for ${attendeeEmailAddress}`, ToastAndroid.LONG);
+            }).catch((err) => {
+              ToastAndroid.show('Error connecting to the databse (meal), contact kumail', ToastAndroid.LONG);
+            })
             ToastAndroid.show(`Checking in ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'} at ${location}`, ToastAndroid.LONG);
           },
-          error => alert(error.message),
-          { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+          error => {
+            console.log("Error with locaation ", error);
+            ToastAndroid.show('Error checking in person (firestore or location), check with Kumail', ToastAndroid.LONG);
+            alert(error.message)
+          },
+          { enableHighAccuracy: true, timeout: 20000 }
         );
         break;
-
-        //this.scanner.reactivate();
       case "checkout":
         console.log("checking out " + e.data);
-        ToastAndroid.show(`Checking out ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`,  ToastAndroid.SHORT);
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const location = JSON.stringify(position);
 
-        //this.scanner.reactivate();
-        break;
+            let updatedWhereabouts = attendee.data().whereabouts;
+            updatedWhereabouts.push({
+              building: "Thode",
+              by: firebase.auth().currentUser.email,
+              initialCheckin: true,
+              time: new Date().toLocaleString(),
+              type: 'outbound',
+              position: {
+                speed: position.coords.speed,
+                accuracy: position.coords.accuracy,
+                altitude: position.coords.altitude,
+                longitude: position.coords.longitude,
+                latitude: position.coords.latitude
+              }
+            });
+
+            firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(attendeeEmailAddress).set({whereabouts: updatedWhereabouts}, {merge: true}).then(() => {
+              ToastAndroid.show(`Updated whereabouts for ${attendeeEmailAddress}`, ToastAndroid.LONG);
+            }).catch((err) => {
+              ToastAndroid.show('Error connecting to the databse (meal), contact kumail', ToastAndroid.LONG);
+            })
+            ToastAndroid.show(`Checking out ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'} at ${location}`, ToastAndroid.LONG);
+          },
+          error => {
+            console.log("Error with locaation ", error);
+            ToastAndroid.show('Error checking out person (firestore or location), check with Kumail', ToastAndroid.LONG);
+            alert(error.message)
+          },
+          { enableHighAccuracy: true, timeout: 20000 }
+        );        break;
 
       default:
         Linking.openURL(e.data).catch(err =>
@@ -242,7 +318,7 @@ const styles = StyleSheet.create({
   centerText: {
     flex: 1,
     fontSize: 18,
-    color: "#777",
+    color: "blue",
     fontWeight: "500"
   },
   buttonText: {
@@ -271,9 +347,9 @@ const styles = StyleSheet.create({
   activeBtn: {
     padding: 5,
     margin: 0,
-    backgroundColor: "blue",
+    backgroundColor: "lightblue",
     borderWidth: 1,
-    borderColor: "blue",
+    borderColor: "lightblue",
     borderRadius: 5
   },
   activeButtonText: {
