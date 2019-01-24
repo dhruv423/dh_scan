@@ -33,12 +33,15 @@ export default class ScanScreen extends Component {
           title="Sign out"
           onPress={navigation.getParam("signOut")}
           color="red"
-          style={{marginRight : 5}}
+          style={{ marginRight: 5 }}
         />
       ),
       headerTitle: (
         <View style={{ flexDirection: "row", alignContent: "center" }}>
-          <Image source={Logo} style={{ marginLeft: 10, marginRight: 10, width: 40, height: 40 }} />
+          <Image
+            source={Logo}
+            style={{ marginLeft: 10, marginRight: 10, width: 40, height: 40 }}
+          />
           <Text style={{ fontSize: 30 }}>DeltaHacks V</Text>
         </View>
       )
@@ -59,38 +62,81 @@ export default class ScanScreen extends Component {
     }
   }
 
-  async getAttendeeData(email){
-    return firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(email).get();
+  async getAttendeeData(email) {
+    return firebase
+      .firestore()
+      .collection("hackathon")
+      .doc("DH5")
+      .collection("Checked In")
+      .doc(email)
+      .get();
   }
 
-  async onSuccess(e) { 
-    let attendeeEmailAddress = e.data.length >= 37 ? e.data.slice(37) : '';
+  async onSuccess(e) {
+    let attendeeEmailAddress = e.data.length >= 37 ? e.data.slice(37) : "";
     let attendee = await this.getAttendeeData(attendeeEmailAddress);
 
     switch (this.state.action) {
       case "register":
         console.log("registering " + e.data);
-        firebase.firestore().collection('hackathon').doc('DH5').collection('FrontDesk').doc(firebase.auth().currentUser.email).set({scanned:e.data.length >= 37 ? e.data.slice(37) : ''}, {merge: true}).then(() => {
-          ToastAndroid.show(`Beaming attendee info! ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'}`, ToastAndroid.LONG);
-        }).catch((err) => {
-          ToastAndroid.show('Error connecting to the databse, contact kumail', ToastAndroid.LONG);
-        })
+        firebase
+          .firestore()
+          .collection("hackathon")
+          .doc("DH5")
+          .collection("FrontDesk")
+          .doc(firebase.auth().currentUser.email)
+          .set(
+            { scanned: e.data.length >= 37 ? e.data.slice(37) : "" },
+            { merge: true }
+          )
+          .then(() => {
+            ToastAndroid.show(
+              `Beaming attendee info! ${
+                e.data.length >= 37 ? e.data.slice(37) : "Invalid QR Code"
+              }`,
+              ToastAndroid.LONG
+            );
+          })
+          .catch(err => {
+            ToastAndroid.show(
+              "Error connecting to the databse, contact kumail",
+              ToastAndroid.LONG
+            );
+          });
 
         break;
       case "meal":
         console.log("giving meal to " + e.data);
 
-        console.log("DATA", attendee.data())
-        
-        firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(attendeeEmailAddress).set({meals: attendee.data().meals + 1}, {merge: true}).then(() => {
-          ToastAndroid.show(`Updated meal for ${attendeeEmailAddress}`, ToastAndroid.LONG);
-        }).catch((err) => {
-          ToastAndroid.show('Error connecting to the databse (meal), contact kumail', ToastAndroid.LONG);
-        })
-        ToastAndroid.show(`Adding a meal for ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'} ${firebase.auth().currentUser.email}`, ToastAndroid.LONG);
+        console.log("DATA", attendee.data());
 
+        firebase
+          .firestore()
+          .collection("hackathon")
+          .doc("DH5")
+          .collection("Checked In")
+          .doc(attendeeEmailAddress)
+          .set({ meals: attendee.data().meals + 1 }, { merge: true })
+          .then(() => {
+            ToastAndroid.show(
+              `Updated meal for ${attendeeEmailAddress}`,
+              ToastAndroid.LONG
+            );
+          })
+          .catch(err => {
+            ToastAndroid.show(
+              "Error connecting to the databse (meal), contact kumail",
+              ToastAndroid.LONG
+            );
+          });
+        ToastAndroid.show(
+          `Adding a meal for ${
+            e.data.length >= 37 ? e.data.slice(37) : "Invalid QR Code"
+          } ${firebase.auth().currentUser.email}`,
+          ToastAndroid.LONG
+        );
 
-/*         const ref = firebase
+        /*         const ref = firebase
           .firestore()
           .collection("meals")
           .doc(e.data);
@@ -119,7 +165,6 @@ export default class ScanScreen extends Component {
       case "checkin":
         console.log("checking in " + e.data);
 
-
         navigator.geolocation.getCurrentPosition(
           position => {
             const location = JSON.stringify(position);
@@ -130,7 +175,7 @@ export default class ScanScreen extends Component {
               by: firebase.auth().currentUser.email,
               initialCheckin: true,
               time: new Date().toLocaleString(),
-              type: 'incoming',
+              type: "incoming",
               position: {
                 speed: position.coords.speed,
                 accuracy: position.coords.accuracy,
@@ -140,17 +185,39 @@ export default class ScanScreen extends Component {
               }
             });
 
-            firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(attendeeEmailAddress).set({whereabouts: updatedWhereabouts}, {merge: true}).then(() => {
-              ToastAndroid.show(`Updated whereabouts for ${attendeeEmailAddress}`, ToastAndroid.LONG);
-            }).catch((err) => {
-              ToastAndroid.show('Error connecting to the databse (meal), contact kumail', ToastAndroid.LONG);
-            })
-            ToastAndroid.show(`Checking in ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'} at ${location}`, ToastAndroid.LONG);
+            firebase
+              .firestore()
+              .collection("hackathon")
+              .doc("DH5")
+              .collection("Checked In")
+              .doc(attendeeEmailAddress)
+              .set({ whereabouts: updatedWhereabouts }, { merge: true })
+              .then(() => {
+                ToastAndroid.show(
+                  `Updated whereabouts for ${attendeeEmailAddress}`,
+                  ToastAndroid.LONG
+                );
+              })
+              .catch(err => {
+                ToastAndroid.show(
+                  "Error connecting to the databse (meal), contact kumail",
+                  ToastAndroid.LONG
+                );
+              });
+            ToastAndroid.show(
+              `Checking in ${
+                e.data.length >= 37 ? e.data.slice(37) : "Invalid QR Code"
+              } at ${location}`,
+              ToastAndroid.LONG
+            );
           },
           error => {
             console.log("Error with locaation ", error);
-            ToastAndroid.show('Error checking in person (firestore or location), check with Kumail', ToastAndroid.LONG);
-            alert(error.message)
+            ToastAndroid.show(
+              "Error checking in person (firestore or location), check with Kumail",
+              ToastAndroid.LONG
+            );
+            alert(error.message);
           },
           { enableHighAccuracy: true, timeout: 20000 }
         );
@@ -167,7 +234,7 @@ export default class ScanScreen extends Component {
               by: firebase.auth().currentUser.email,
               initialCheckin: true,
               time: new Date().toLocaleString(),
-              type: 'outbound',
+              type: "outbound",
               position: {
                 speed: position.coords.speed,
                 accuracy: position.coords.accuracy,
@@ -177,20 +244,43 @@ export default class ScanScreen extends Component {
               }
             });
 
-            firebase.firestore().collection('hackathon').doc('DH5').collection('Checked In').doc(attendeeEmailAddress).set({whereabouts: updatedWhereabouts}, {merge: true}).then(() => {
-              ToastAndroid.show(`Updated whereabouts for ${attendeeEmailAddress}`, ToastAndroid.LONG);
-            }).catch((err) => {
-              ToastAndroid.show('Error connecting to the databse (meal), contact kumail', ToastAndroid.LONG);
-            })
-            ToastAndroid.show(`Checking out ${e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'} at ${location}`, ToastAndroid.LONG);
+            firebase
+              .firestore()
+              .collection("hackathon")
+              .doc("DH5")
+              .collection("Checked In")
+              .doc(attendeeEmailAddress)
+              .set({ whereabouts: updatedWhereabouts }, { merge: true })
+              .then(() => {
+                ToastAndroid.show(
+                  `Updated whereabouts for ${attendeeEmailAddress}`,
+                  ToastAndroid.LONG
+                );
+              })
+              .catch(err => {
+                ToastAndroid.show(
+                  "Error connecting to the databse (meal), contact kumail",
+                  ToastAndroid.LONG
+                );
+              });
+            ToastAndroid.show(
+              `Checking out ${
+                e.data.length >= 37 ? e.data.slice(37) : "Invalid QR Code"
+              } at ${location}`,
+              ToastAndroid.LONG
+            );
           },
           error => {
             console.log("Error with locaation ", error);
-            ToastAndroid.show('Error checking out person (firestore or location), check with Kumail', ToastAndroid.LONG);
-            alert(error.message)
+            ToastAndroid.show(
+              "Error checking out person (firestore or location), check with Kumail",
+              ToastAndroid.LONG
+            );
+            alert(error.message);
           },
           { enableHighAccuracy: true, timeout: 20000 }
-        );        break;
+        );
+        break;
 
       default:
         Linking.openURL(e.data).catch(err =>
@@ -235,78 +325,27 @@ export default class ScanScreen extends Component {
         cameraStyle={{ height: "80%" }}
         bottomContent={
           <View style={styles.btnContainer}>
-            <TouchableOpacity
+            <Button
+              title="Register"
               onPress={() => this.handleRegister()}
-              style={
-                this.state.action == "register"
-                  ? styles.activeBtn
-                  : styles.buttonTouchable
-              }
-            >
-              <Text
-                style={
-                  this.state.action == "register"
-                    ? styles.activeButtonText
-                    : styles.buttonText
-                }
-              >
-                Register
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+              color={this.state.action === "register" ? "orange" : "blue"}
+            />
+            <Button
+              title="Meal"
               onPress={() => this.handleMeal()}
-              style={
-                this.state.action == "meal"
-                  ? styles.activeBtn
-                  : styles.buttonTouchable
-              }
-            >
-              <Text
-                style={
-                  this.state.action == "meal"
-                    ? styles.activeButtonText
-                    : styles.buttonText
-                }
-              >
-                Meal
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+              color={this.state.action === "meal" ? "orange" : "blue"}
+            />
+
+            <Button
+              title="Check In"
               onPress={() => this.handleCheckin()}
-              style={
-                this.state.action == "checkin"
-                  ? styles.activeBtn
-                  : styles.buttonTouchable
-              }
-            >
-              <Text
-                style={
-                  this.state.action == "checkin"
-                    ? styles.activeButtonText
-                    : styles.buttonText
-                }
-              >
-                Check-In
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+              color={this.state.action === "checkin" ? "orange" : "blue"}
+            />
+            <Button
+              title="Check Out"
               onPress={() => this.handleCheckout()}
-              style={
-                this.state.action == "checkout"
-                  ? styles.activeBtn
-                  : styles.buttonTouchable
-              }
-            >
-              <Text
-                style={
-                  this.state.action == "checkout"
-                    ? styles.activeButtonText
-                    : styles.buttonText
-                }
-              >
-                Check-Out
-              </Text>
-            </TouchableOpacity>
+              color={this.state.action === "checkout" ? "orange" : "blue"}
+            />
           </View>
         }
       />
@@ -337,12 +376,12 @@ const styles = StyleSheet.create({
     //borderColor: 'white',
     //borderWidth: 1,
     //borderRadius: 12,
-    color: 'white',
+    color: "white",
     fontSize: 24,
-    fontWeight: 'bold',
-    overflow: 'hidden',
+    fontWeight: "bold",
+    overflow: "hidden",
     //padding: 12,
-    textAlign:'center',
+    textAlign: "center"
   },
   activeBtn: {
     padding: 5,
