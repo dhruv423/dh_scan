@@ -12,7 +12,14 @@ import firebase from "react-native-firebase";
 import t from "tcomb-form-native"; // 0.6.9
 import Logo from "../../assets/logo.png";
 const Form = t.form.Form;
-
+let options = {
+  fields: {
+    password: {
+      password: true,
+      secureTextEntry: true
+    }
+  }
+};
 let User = t.struct({
   user: t.String, // a required string
   password: t.String // an optional string
@@ -40,7 +47,8 @@ export default class SignInScreen extends Component {
       firebase
         .auth()
         .signInWithEmailAndPassword(value.user, value.password)
-        .then(() => ToastAndroid.show(`Logged into ${value.user}`, ToastAndroid.SHORT)
+        .then(() =>
+          ToastAndroid.show(`Logged into ${value.user}`, ToastAndroid.SHORT)
         )
         .then(() => this.props.navigation.navigate("App"))
 
@@ -56,7 +64,7 @@ export default class SignInScreen extends Component {
           <Image source={Logo} style={styles.logo} />
         </View>
         <View>
-          <Form ref="form" type={User} />
+          <Form ref="form" type={User} options={options} />
           <TouchableHighlight
             style={styles.loginBtn}
             onPress={this.onPress}
