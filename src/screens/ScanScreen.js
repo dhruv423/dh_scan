@@ -34,7 +34,7 @@ export default class ScanScreen extends Component {
           title="Sign out"
           onPress={navigation.getParam("signOut")}
           color="red"
-          style={{ marginRight: 5 }}
+          style={{ marginRight: 10 }}
         />
       ),
       headerTitle: (
