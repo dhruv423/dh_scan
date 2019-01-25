@@ -30,12 +30,13 @@ export default class ScanScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       headerRight: (
-        <Button
-          title="Sign out"
-          onPress={navigation.getParam("signOut")}
-          color="#EC4E53"
-          style={{ marginRight: 10 }}
-        />
+        <View style={{ marginRight: 5 }}>
+          <Button
+            title="Sign out"
+            onPress={navigation.getParam("signOut")}
+            color="#EC4E53"
+          />
+        </View>
       ),
       headerTitle: (
         <View style={{ flexDirection: "row", alignContent: "center" }}>
@@ -164,7 +165,7 @@ export default class ScanScreen extends Component {
         //this.scanner.reactivate();
         break;
       case "checkin":
-        console.log("checking in " + e.data);
+        console.log("checking in  " + e.data);
 
         navigator.geolocation.getCurrentPosition(
           position => {
