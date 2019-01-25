@@ -33,7 +33,7 @@ export default class ScanScreen extends Component {
         <Button
           title="Sign out"
           onPress={navigation.getParam("signOut")}
-          color="red"
+          color="#EC4E53"
           style={{ marginRight: 10 }}
         />
       ),
@@ -329,23 +329,23 @@ export default class ScanScreen extends Component {
             <Button
               title="Register"
               onPress={() => this.handleRegister()}
-              color={this.state.action === "register" ? "orange" : "blue"}
+              color={this.state.action === "register" ? "#FCDA66" : "#2DAFCF"}
             />
             <Button
               title="Meal"
               onPress={() => this.handleMeal()}
-              color={this.state.action === "meal" ? "orange" : "blue"}
+              color={this.state.action === "meal" ? "#FCDA66" : "#2DAFCF"}
             />
             <Button
               title="Check In"
               onPress={() => this.handleCheckin()}
               onLongPress={() => this.setState({ checkInDetails: true })}
-              color={this.state.action === "checkin" ? "orange" : "blue"}
+              color={this.state.action === "checkin" ? "#FCDA66" : "#2DAFCF"}
             />
             <Button
               title="Check Out"
               onPress={() => this.handleCheckout()}
-              color={this.state.action === "checkout" ? "orange" : "blue"}
+              color={this.state.action === "checkout" ? "#FCDA66" : "#2DAFCF"}
             />
           </View>
         }
