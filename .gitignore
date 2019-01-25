@@ -21,7 +21,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
-
+android/gradle.properties
 # Android/IntelliJ
 #
 build/
@@ -58,3 +58,4 @@ buck-out/
 #firebase
 google-services.json
 /android/app/google-services.json
+

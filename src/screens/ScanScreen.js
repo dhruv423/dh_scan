@@ -23,7 +23,8 @@ export default class ScanScreen extends Component {
     super(props);
     this.state = {
       action: "meal",
-      location: ""
+      location: "",
+      checkInDetails: false
     };
   }
   static navigationOptions = ({ navigation }) => {
@@ -335,10 +336,10 @@ export default class ScanScreen extends Component {
               onPress={() => this.handleMeal()}
               color={this.state.action === "meal" ? "orange" : "blue"}
             />
-
             <Button
               title="Check In"
               onPress={() => this.handleCheckin()}
+              onLongPress={() => this.setState({ checkInDetails: true })}
               color={this.state.action === "checkin" ? "orange" : "blue"}
             />
             <Button
@@ -397,7 +398,7 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     width: "100%"
   }
 });
