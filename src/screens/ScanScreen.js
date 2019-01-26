@@ -23,7 +23,7 @@ export default class ScanScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      action: "meal",
+      action: "register",
       location: "",
       checkInDetails: false
     };
@@ -144,7 +144,7 @@ export default class ScanScreen extends Component {
           )
           .then(() => {
             ToastAndroid.show(
-              `Beaming attendee info! ${
+              `🛸 Beaming attendee info! ${
                 e.data.length >= 37 ? e.data.slice(37) : "Invalid QR Code"
               }`,
               ToastAndroid.LONG
@@ -193,7 +193,7 @@ export default class ScanScreen extends Component {
               }},
             ],
           )
-        } else {
+        } else if (attendee.exists && attendee.data().type == 'walk in') {
           return Alert.alert(
             `Walkins cannot be beamed 🙁`,
             'You can only beam an accepted applicant.',
@@ -203,6 +203,9 @@ export default class ScanScreen extends Component {
               }},
             ],
           )
+        }
+        else {
+          let r = await this.beam(e);
         }
 
         break;
@@ -214,7 +217,7 @@ export default class ScanScreen extends Component {
             let result = await this.updateMeal(attendee, currentMeal.data().mealsSoFar, attendeeEmailAddress);
           } catch (err) {
             return Alert.alert(
-              `Big yike`,
+              `Big yike 🤮`,
               `something went wrong with meals. ${err}`,
               [
                 {text: 'Okay :(', onPress: () => {
@@ -397,7 +400,7 @@ export default class ScanScreen extends Component {
         bottomContent={
           <View style={styles.btnContainer}>
             <Button
-              title="Register"
+              title="Beam"
               onPress={() => this.handleRegister()}
               color={this.state.action === "register" ? "#FCDA66" : "#2DAFCF"}
             />
