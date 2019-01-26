@@ -167,7 +167,7 @@ export default class ScanScreen extends Component {
     attendeeEmailAddress = attendeeEmailAddress.toLowerCase();
     if(attendeeEmailAddress == ''){
       return Alert.alert(
-        'Invalid QR code',
+        'Invalid QR code 🤕',
         'The QR code that was scanned is not in the valid format for DeltaHacks 5',
         [
           {text: 'OK', onPress: () => console.log('OK Pressed')},
@@ -180,7 +180,7 @@ export default class ScanScreen extends Component {
     let attendeealready = false;
     switch (this.state.action) {
       case "register":
-         if (attendee.exists) {
+         if (attendee.exists && attendee.data().type != 'walk in') {
           return Alert.alert(
             `Attendee is already Checked In 🤔`,
             'FYI this attendee/mentor/sponsor is already checked into DH V, but you can beam them anyway if you wish to. (Note you cannot beam walkins)',
@@ -193,7 +193,17 @@ export default class ScanScreen extends Component {
               }},
             ],
           )
-        } 
+        } else {
+          return Alert.alert(
+            `Walkins cannot be beamed 🙁`,
+            'You can only beam an accepted applicant.',
+            [
+              {text: 'Okay :(', onPress: () => {
+                return;
+              }},
+            ],
+          )
+        }
 
         break;
       case "meal":
