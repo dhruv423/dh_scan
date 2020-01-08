@@ -1,28 +1,29 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Text,
   View,
   StyleSheet,
   TouchableHighlight,
   Image,
-  ToastAndroid
-} from "react-native";
-import firebase from "react-native-firebase";
+} from 'react-native';
+import firebase from 'react-native-firebase';
 
-import t from "tcomb-form-native"; // 0.6.9
-import Logo from "../../assets/logo.png";
+import ToastAndroid from 'react-native-simple-toast';
+
+import t from 'tcomb-form-native'; // 0.6.9
+import Logo from '../../assets/logo.png';
 const Form = t.form.Form;
 let options = {
   fields: {
     password: {
       password: true,
-      secureTextEntry: true
-    }
-  }
+      secureTextEntry: true,
+    },
+  },
 };
 let User = t.struct({
   user: t.String, // a required string
-  password: t.String // an optional string
+  password: t.String, // an optional string
 });
 
 export default class SignInScreen extends Component {
@@ -30,7 +31,7 @@ export default class SignInScreen extends Component {
     super(props);
 
     this.state = {
-      array: []
+      array: [],
     };
 
     this.onPress = this.onPress.bind(this);
@@ -41,20 +42,18 @@ export default class SignInScreen extends Component {
     const value = this.refs.form.getValue();
     if (value) {
       // if validation fails, value will be null
-      console.log("User is " + value.user); // value here is an instance of Person
-      console.log("Pass is " + value.password); // value here is an instance of Person
+      console.log('User is ' + value.user); // value here is an instance of Person
+      console.log('Pass is ' + value.password); // value here is an instance of Person
 
       firebase
         .auth()
         .signInWithEmailAndPassword(value.user, value.password)
-        .then(() =>
-          ToastAndroid.show(`Logged into ${value.user}`, ToastAndroid.SHORT)
-        )
-        .then(() => this.props.navigation.navigate("App"))
+        .then(() => ToastAndroid.show(`Logged into ${value.user}`))
+        .then(() => this.props.navigation.navigate('App'))
 
         .catch(error => this.setState({ errorMessage: error.message }));
     } else {
-      console.log("hi");
+      console.log('hi');
     }
   }
   render() {
@@ -79,31 +78,31 @@ export default class SignInScreen extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "space-evenly",
+    justifyContent: 'space-evenly',
     marginTop: 50,
     padding: 20,
-    backgroundColor: "#ffffff"
+    backgroundColor: '#ffffff',
   },
   loginBtn: {
-    width: "50%",
-    borderColor: "blue",
-    borderWidth: 1
+    width: '50%',
+    borderColor: 'blue',
+    borderWidth: 1,
   },
   btnText: {
     fontSize: 20,
-    textAlign: "center"
+    textAlign: 'center',
   },
   logoContainer: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "50%",
-    marginTop: -30
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '50%',
+    marginTop: -30,
   },
   logo: {
-    resizeMode: "contain",
-    width: "100%",
-    height: "100%"
-  }
+    resizeMode: 'contain',
+    width: '100%',
+    height: '100%',
+  },
 });
