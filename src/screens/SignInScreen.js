@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import firebase from 'react-native-firebase';
 
-import ToastAndroid from 'react-native-simple-toast';
+import Toast from 'react-native-simple-toast';
 
 import t from 'tcomb-form-native'; // 0.6.9
 import Logo from '../../assets/logo.png';
@@ -48,7 +48,7 @@ export default class SignInScreen extends Component {
       firebase
         .auth()
         .signInWithEmailAndPassword(value.user, value.password)
-        .then(() => ToastAndroid.show(`Logged into ${value.user}`))
+        .then(() => Toast.show(`Logged into ${value.user}`))
         .then(() => this.props.navigation.navigate('App'))
 
         .catch(error => this.setState({ errorMessage: error.message }));

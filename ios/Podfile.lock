@@ -282,6 +282,9 @@ PODS:
   - nanopb/encode (0.3.9011)
   - React (0.57.8):
     - React/Core (= 0.57.8)
+  - react-native-simple-toast (1.0.0):
+    - React
+    - Toast (~> 4.0.0)
   - React/Core (0.57.8):
     - yoga (= 0.57.8.React)
   - React/CxxBridge (0.57.8):
@@ -321,6 +324,7 @@ PODS:
     - React/RCTBlob
   - ReactNativeNavigation (3.0.0-alpha.2):
     - React
+  - Toast (4.0.0)
   - yoga (0.57.8.React)
 
 DEPENDENCIES:
@@ -330,6 +334,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - react-native-simple-toast (from `../node_modules/react-native-simple-toast`)
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
@@ -366,6 +371,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - Toast
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -376,6 +382,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   React:
     :path: "../node_modules/react-native"
+  react-native-simple-toast:
+    :path: "../node_modules/react-native-simple-toast"
   ReactNativeNavigation:
     :path: "../node_modules/react-native-navigation"
   yoga:
@@ -407,9 +415,11 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   React: adbac0757ce35e92fbd447ab98c810209d27d9b0
+  react-native-simple-toast: 6c376bd79b1e255a4bee90a72ead6447f96ea10d
   ReactNativeNavigation: ad6e6a664bc6c8eb2fe0fe0b73e2c8bd52275be3
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   yoga: 74cdf036c30820443b25ade59916236b1e95ee93
 
-PODFILE CHECKSUM: a2703aa00595fc42b36697adc1e036dfb7d767eb
+PODFILE CHECKSUM: 3b1005a97f361ea64b753b2924df84fd5404c8ce
 
 COCOAPODS: 1.8.4

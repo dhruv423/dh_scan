@@ -16,7 +16,7 @@ import {
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import firebase from 'react-native-firebase';
 
-import ToastAndroid from 'react-native-simple-toast';
+import Toast from 'react-native-simple-toast';
 
 import Logo from '../../assets/logo.png';
 
@@ -89,15 +89,15 @@ export default class ScanScreen extends Component {
         .doc(email)
         .set({ meals: attendee.data().meals + 1 }, { merge: true })
         .then(() => {
-          ToastAndroid.show(
+          Toast.show(
             `Updated meal for ${attendee.data().name} ${email}`,
-            ToastAndroid.LONG,
+            Toast.LONG,
           );
         })
         .catch(err => {
-          ToastAndroid.show(
+          Toast.show(
             'Error connecting to the databse (meal), contact kumail',
-            ToastAndroid.LONG,
+            Toast.LONG,
           );
         });
     } else {
@@ -122,15 +122,15 @@ export default class ScanScreen extends Component {
                 .doc(email)
                 .set({ meals: attendee.data().meals + 1 }, { merge: true })
                 .then(() => {
-                  ToastAndroid.show(
+                  Toast.show(
                     `Updated meal for ${attendee.data().name}`,
-                    ToastAndroid.LONG,
+                    Toast.LONG,
                   );
                 })
                 .catch(err => {
-                  ToastAndroid.show(
+                  Toast.show(
                     'Error connecting to the databse (meal), contact kumail',
-                    ToastAndroid.LONG,
+                    Toast.LONG,
                   );
                 });
             },
@@ -152,11 +152,11 @@ export default class ScanScreen extends Component {
         { merge: true },
       )
       .then(() => {
-        ToastAndroid.show(
+        Toast.show(
           `🛸 Beaming attendee info! ${
             e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'
           }`,
-          ToastAndroid.LONG,
+          Toast.LONG,
         );
       })
       .catch(err => {
@@ -254,11 +254,11 @@ export default class ScanScreen extends Component {
           }
         }
 
-        /* ToastAndroid.show(
+        /* Toast.show(
           `Adding a meal for ${
             e.data.length >= 37 ? e.data.slice(37) : "Invalid QR Code"
           } ${firebase.auth().currentUser.email}`,
-          ToastAndroid.LONG
+          Toast.LONG
         ); */
 
         break;
@@ -293,29 +293,29 @@ export default class ScanScreen extends Component {
               .doc(attendeeEmailAddress)
               .set({ whereabouts: updatedWhereabouts }, { merge: true })
               .then(() => {
-                ToastAndroid.show(
+                Toast.show(
                   `Updated whereabouts for ${attendeeEmailAddress}`,
-                  ToastAndroid.LONG,
+                  Toast.LONG,
                 );
               })
               .catch(err => {
-                ToastAndroid.show(
+                Toast.show(
                   'Error connecting to the databse (meal), contact kumail',
-                  ToastAndroid.LONG,
+                  Toast.LONG,
                 );
               });
-            ToastAndroid.show(
+            Toast.show(
               `Checking in ${
                 e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'
               } at ${location}`,
-              ToastAndroid.LONG,
+              Toast.LONG,
             );
           },
           error => {
             console.log('Error with locaation ', error);
-            ToastAndroid.show(
+            Toast.show(
               'Error checking in person (firestore or location), check with Kumail',
-              ToastAndroid.LONG,
+              Toast.LONG,
             );
             alert(error.message);
           },
@@ -352,29 +352,29 @@ export default class ScanScreen extends Component {
               .doc(attendeeEmailAddress)
               .set({ whereabouts: updatedWhereabouts }, { merge: true })
               .then(() => {
-                ToastAndroid.show(
+                Toast.show(
                   `Updated whereabouts for ${attendeeEmailAddress}`,
-                  ToastAndroid.LONG,
+                  Toast.LONG,
                 );
               })
               .catch(err => {
-                ToastAndroid.show(
+                Toast.show(
                   'Error connecting to the databse (meal), contact kumail',
-                  ToastAndroid.LONG,
+                  Toast.LONG,
                 );
               });
-            ToastAndroid.show(
+            Toast.show(
               `Checking out ${
                 e.data.length >= 37 ? e.data.slice(37) : 'Invalid QR Code'
               } at ${location}`,
-              ToastAndroid.LONG,
+              Toast.LONG,
             );
           },
           error => {
             console.log('Error with locaation ', error);
-            ToastAndroid.show(
+            Toast.show(
               'Error checking out person (firestore or location), check with Kumail',
-              ToastAndroid.LONG,
+              Toast.LONG,
             );
             alert(error.message);
           },
