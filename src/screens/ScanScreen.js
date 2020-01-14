@@ -69,23 +69,23 @@ export default class ScanScreen extends Component {
   async getAttendeeData(email) {
     return firebase
       .firestore()
-      .collection('hackathon')
-      .doc('DH5')
-      .collection('Checked In')
+      .collection('DH6')
+      .doc('hackathon')
+      .collection('checked in')
       .doc(email)
       .get();
   }
 
   async updateMeal(attendee, mealSoFar, email) {
     if (
-      attendee.data().meals <= mealSoFar &&
+      attendee.data().meals < mealSoFar &&
       (attendee.data().type == 'attendee' || attendee.data().type == 'walk in')
     ) {
       return firebase
         .firestore()
-        .collection('hackathon')
-        .doc('DH5')
-        .collection('Checked In')
+        .collection('DH6')
+        .doc('hackathon')
+        .collection('checked in')
         .doc(email)
         .set({ meals: attendee.data().meals + 1 }, { merge: true })
         .then(() => {
@@ -116,9 +116,9 @@ export default class ScanScreen extends Component {
             onPress: async () => {
               return firebase
                 .firestore()
-                .collection('hackathon')
-                .doc('DH5')
-                .collection('Checked In')
+                .collection('DH6')
+                .doc('hackathon')
+                .collection('checked in')
                 .doc(email)
                 .set({ meals: attendee.data().meals + 1 }, { merge: true })
                 .then(() => {
@@ -143,9 +143,9 @@ export default class ScanScreen extends Component {
   async beam(e) {
     return firebase
       .firestore()
-      .collection('hackathon')
-      .doc('DH5')
-      .collection('FrontDesk')
+      .collection('DH6')
+      .doc('hackathon')
+      .collection('live desk')
       .doc(firebase.auth().currentUser.email)
       .set(
         { scanned: e.data.length >= 37 ? e.data.slice(37) : '' },
@@ -225,10 +225,8 @@ export default class ScanScreen extends Component {
       case 'meal':
         let currentMeal = await firebase
           .firestore()
-          .collection('hackathon')
-          .doc('DH5')
-          .collection('Data')
-          .doc('Variables')
+          .collection('DH6')
+          .doc('hackathon')
           .get();
         console.log('Current Global meal', currentMeal.data().mealsSoFar);
         if (attendee.exists) {
@@ -287,9 +285,9 @@ export default class ScanScreen extends Component {
 
             firebase
               .firestore()
-              .collection('hackathon')
-              .doc('DH5')
-              .collection('Checked In')
+              .collection('DH6')
+              .doc('hackathon')
+              .collection('checked in')
               .doc(attendeeEmailAddress)
               .set({ whereabouts: updatedWhereabouts }, { merge: true })
               .then(() => {
@@ -346,9 +344,9 @@ export default class ScanScreen extends Component {
 
             firebase
               .firestore()
-              .collection('hackathon')
-              .doc('DH5')
-              .collection('Checked In')
+              .collection('DH6')
+              .doc('hackathon')
+              .collection('checked in')
               .doc(attendeeEmailAddress)
               .set({ whereabouts: updatedWhereabouts }, { merge: true })
               .then(() => {

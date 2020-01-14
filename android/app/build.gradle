@@ -108,6 +108,7 @@ android {
         }
         
         //required for firestore
+        missingDimensionStrategy 'react-native-camera', 'general'
         multiDexEnabled true
     } 
     signingConfigs {

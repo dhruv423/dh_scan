@@ -24,7 +24,6 @@
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		3DD46B0553734E8DA011176B /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6927363E4D1A4BE6A5764D3E /* libRNCamera.a */; };
-		8171894223C9795600572B13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8171891523C9795600572B13 /* Assets.xcassets */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		99295A61893E4FCB9B695B99 /* libPods-qrscan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F5B16407420384E6B79957 /* libPods-qrscan.a */; };
 		9D3ECA4B73E1444FA1085A43 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E4608CA7FF4E1ABCA86D51 /* libRNGestureHandler.a */; };
@@ -367,7 +366,6 @@
 		6927363E4D1A4BE6A5764D3E /* libRNCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCamera.a; sourceTree = "<group>"; };
 		6C32012FDECC444AA503DE13 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
-		8171891523C9795600572B13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../Downloads/AppIcons/Assets.xcassets; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B356261DC62F1B77074124D6 /* Pods-qrscan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-qrscan.debug.xcconfig"; path = "Target Support Files/Pods-qrscan/Pods-qrscan.debug.xcconfig"; sourceTree = "<group>"; };
@@ -501,7 +499,6 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				8171891523C9795600572B13 /* Assets.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -730,11 +727,11 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = TVJMGP657B;
+						DevelopmentTeam = 683Q87TSA3;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = TVJMGP657B;
+						DevelopmentTeam = 683Q87TSA3;
 					};
 				};
 			};
@@ -1135,7 +1132,6 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				8171894223C9795600572B13 /* Assets.xcassets in Resources */,
 				FC1A3E5A23C121EE00B6BDD8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1245,7 +1241,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				DEVELOPMENT_TEAM = TVJMGP657B;
+				DEVELOPMENT_TEAM = 683Q87TSA3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1283,7 +1279,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = TVJMGP657B;
+				DEVELOPMENT_TEAM = 683Q87TSA3;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
@@ -1318,7 +1314,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = TVJMGP657B;
+				DEVELOPMENT_TEAM = 683Q87TSA3;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
@@ -1333,7 +1329,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = reactjs.native.qrscan1;
+				PRODUCT_BUNDLE_IDENTIFIER = reactjs.native.qrscan;
 				PRODUCT_NAME = qrscan;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1345,7 +1341,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = TVJMGP657B;
+				DEVELOPMENT_TEAM = 683Q87TSA3;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
@@ -1360,7 +1356,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = reactjs.native.qrscan1;
+				PRODUCT_BUNDLE_IDENTIFIER = reactjs.native.qrscan;
 				PRODUCT_NAME = qrscan;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

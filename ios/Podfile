@@ -31,8 +31,8 @@ target 'qrscan' do
   pod 'Firebase/Firestore'
   
   pod 'ReactNativeNavigation', :path => '../node_modules/react-native-navigation'
-
-
   pod 'react-native-simple-toast', :path => '../node_modules/react-native-simple-toast'
+
+  
 
 end

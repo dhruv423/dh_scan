@@ -415,11 +415,11 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   React: adbac0757ce35e92fbd447ab98c810209d27d9b0
-  react-native-simple-toast: 6c376bd79b1e255a4bee90a72ead6447f96ea10d
+  react-native-simple-toast: 9c2f5979dfe555d0aa7b084348a06fd6ef7a6f55
   ReactNativeNavigation: ad6e6a664bc6c8eb2fe0fe0b73e2c8bd52275be3
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   yoga: 74cdf036c30820443b25ade59916236b1e95ee93
 
-PODFILE CHECKSUM: 3b1005a97f361ea64b753b2924df84fd5404c8ce
+PODFILE CHECKSUM: 96874f3a5545c087144333eae327f474105a3eef
 
 COCOAPODS: 1.8.4
