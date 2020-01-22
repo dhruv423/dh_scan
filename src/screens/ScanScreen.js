@@ -114,7 +114,7 @@ export default class ScanScreen extends Component {
           {
             text: 'Give anyway',
             onPress: async () => {
-              return firebase
+              await firebase
                 .firestore()
                 .collection('DH6')
                 .doc('hackathon')
@@ -133,6 +133,7 @@ export default class ScanScreen extends Component {
                     Toast.LONG,
                   );
                 });
+            return;
             },
           },
         ],

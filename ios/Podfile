@@ -32,7 +32,13 @@ target 'qrscan' do
   
   pod 'ReactNativeNavigation', :path => '../node_modules/react-native-navigation'
   pod 'react-native-simple-toast', :path => '../node_modules/react-native-simple-toast'
-
+  post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
+end
   
 
 end
